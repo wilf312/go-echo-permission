@@ -3,10 +3,13 @@ package main
 import (
 	"net/http"
 	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
+  "github.com/labstack/echo/middleware"
+  "./handler"
 )
 
 func main() {
+	const port = ":1323"
+
 	// Echo instance
 	e := echo.New()
 
@@ -15,13 +18,10 @@ func main() {
 	e.Use(middleware.Recover())
 
 	// Routes
-	e.GET("/", hello)
+	e.GET("/", route.MainPage())
+  // e.GET("/path/:pathParameter", handler.PathParameter()
+)
 
 	// Start server
-	e.Logger.Fatal(e.Start(":1323"))
-}
-
-// Handler
-func hello(c echo.Context) error {
-	return c.String(http.StatusOK, "Hello, World!")
+	e.Logger.Fatal(e.Start(port))
 }
